@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Functions On Rest Countries Task</title>
+</head>
+<body>
+    <script>
+
+        var request=new XMLHttpRequest()
+            request.open('GET','https://restcountries.com/v3.1/all')
+            request.send()
+            request.onload=function(){
+                var data=JSON.parse(request.response)
+                console.log(data)
+        
+            //Get all the countries from the Asia continent /region using the Filter function    
+            var region = data.filter((element)=>element.region=="Asia")
+            console.log("Country Names of continent Asia")
+            console.log(region.map((element)=>element.name.official))    
+
+            //Get all the countries with a population of less than 2 lakhs using Filter function
+            var population = data.filter((element)=>element.population<200000)
+            console.log("countries with a population of less than 2 lakhs")
+            console.log(population.map((element)=>element.name.official))   
+
+            //Print the total population of countries using reduce function
+            var totalpop=data.reduce((acc,element)=>acc+element.population,0)
+            console.log("Total Population of Countries")
+            console.log(totalpop)
+            console.log("\n")
+
+            //country which uses US Dollars as currency
+            var currency = data.filter((element)=>element.currencies).filter((element)=>element.currencies.USD)
+            var US_dollor_country = currency.map((element)=>element.name.official)
+            console.log("Country which use US Dollars are:")
+            console.log(US_dollor_country)
+            
+            //fetch name, capital, flag using forEach function
+            var countryname = []
+            Object.keys(data).forEach(key => {
+            countryname.push(data[key].name.official)
+            })
+            var capital = []
+            Object.keys(data).forEach(key => {
+            capital.push(data[key].capital)
+            })
+            var flags = []
+            Object.keys(data).forEach(key => {
+            flags.push(data[key].flag)
+            })
+            console.log("Country name using For each")
+            console.log(countryname)
+            console.log("Capital using For each")
+            console.log(capital)
+            console.log("flags using for each")
+            console.log(flags)
+            
+        }
+
+    </script>
+</body>
+</html>
